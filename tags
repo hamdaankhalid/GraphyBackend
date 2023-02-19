@@ -1,0 +1,37 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Configuration	GraphyBackend/Startup.cs	/^        public IConfiguration Configuration { get; }$/;"	p	class:GraphyBackend.Startup
+Configure	GraphyBackend/Startup.cs	/^        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)$/;"	m	class:GraphyBackend.Startup
+ConfigureServices	GraphyBackend/Startup.cs	/^        public void ConfigureServices(IServiceCollection services)$/;"	m	class:GraphyBackend.Startup
+CreateHostBuilder	GraphyBackend/Program.cs	/^        public static IHostBuilder CreateHostBuilder(string[] args) =>$/;"	m	class:GraphyBackend.Program
+Date	GraphyBackend/WeatherForecast.cs	/^        public DateTime Date { get; set; }$/;"	p	class:GraphyBackend.WeatherForecast
+Get	GraphyBackend/Controllers/WeatherForecastController.cs	/^        public IEnumerable<WeatherForecast> Get()$/;"	m	class:GraphyBackend.Controllers.WeatherForecastController
+GetItem	GraphyBackend/Repositories/InMemItemsRepository.cs	/^		public Item GetItem(Guid id)$/;"	m	class:GraphyBackend.Repositories.InMemItemsRepository
+GetItems	GraphyBackend/Repositories/InMemItemsRepository.cs	/^		public IEnumerable<<Item> GetItems()$/;"	m	class:GraphyBackend.Repositories.InMemItemsRepository
+GraphyBackend	GraphyBackend/Program.cs	/^namespace GraphyBackend$/;"	n
+GraphyBackend	GraphyBackend/Startup.cs	/^namespace GraphyBackend$/;"	n
+GraphyBackend	GraphyBackend/WeatherForecast.cs	/^namespace GraphyBackend$/;"	n
+GraphyBackend.Controllers	GraphyBackend/Controllers/ItemsController.cs	/^namespace GraphyBackend.Controllers $/;"	n
+GraphyBackend.Controllers	GraphyBackend/Controllers/WeatherForecastController.cs	/^namespace GraphyBackend.Controllers$/;"	n
+GraphyBackend.Models	GraphyBackend/Models/Item.cs	/^namespace GraphyBackend.Models$/;"	n
+GraphyBackend.Repositories	GraphyBackend/Repositories/InMemItemsRepository.cs	/^namespace GraphyBackend.Repositories$/;"	n
+InMemItemsRepository	GraphyBackend/Repositories/InMemItemsRepository.cs	/^	public class InMemItemsRepository$/;"	c	namespace:GraphyBackend.Repositories
+Item	GraphyBackend/Models/Item.cs	/^	public record Item$/;"	p	namespace:GraphyBackend.Models
+ItemsController	GraphyBackend/Controllers/ItemsController.cs	/^	public class ItemsController : ControllerBase$/;"	c	namespace:GraphyBackend.Controllers
+Main	GraphyBackend/Program.cs	/^        public static void Main(string[] args)$/;"	m	class:GraphyBackend.Program
+Program	GraphyBackend/Program.cs	/^    public class Program$/;"	c	namespace:GraphyBackend
+Startup	GraphyBackend/Startup.cs	/^        public Startup(IConfiguration configuration)$/;"	m	class:GraphyBackend.Startup
+Startup	GraphyBackend/Startup.cs	/^    public class Startup$/;"	c	namespace:GraphyBackend
+Summaries	GraphyBackend/Controllers/WeatherForecastController.cs	/^        private static readonly string[] Summaries = new[]$/;"	f	class:GraphyBackend.Controllers.WeatherForecastController	file:
+Summary	GraphyBackend/WeatherForecast.cs	/^        public string Summary { get; set; }$/;"	p	class:GraphyBackend.WeatherForecast
+TemperatureC	GraphyBackend/WeatherForecast.cs	/^        public int TemperatureC { get; set; }$/;"	p	class:GraphyBackend.WeatherForecast
+TemperatureF	GraphyBackend/WeatherForecast.cs	/^        public int TemperatureF => 32 + (int)(TemperatureC \/ 0.5556);$/;"	f	class:GraphyBackend.WeatherForecast
+WeatherForecast	GraphyBackend/WeatherForecast.cs	/^    public class WeatherForecast$/;"	c	namespace:GraphyBackend
+WeatherForecastController	GraphyBackend/Controllers/WeatherForecastController.cs	/^        public WeatherForecastController(ILogger<WeatherForecastController> logger)$/;"	m	class:GraphyBackend.Controllers.WeatherForecastController
+WeatherForecastController	GraphyBackend/Controllers/WeatherForecastController.cs	/^    public class WeatherForecastController : ControllerBase$/;"	c	namespace:GraphyBackend.Controllers
+_logger	GraphyBackend/Controllers/WeatherForecastController.cs	/^        private readonly ILogger<WeatherForecastController> _logger;$/;"	f	class:GraphyBackend.Controllers.WeatherForecastController	file:
+items	GraphyBackend/Repositories/InMemItemsRepository.cs	/^		private readonly List<Item> items = new List<Item>{$/;"	f	class:GraphyBackend.Repositories.InMemItemsRepository	file:
