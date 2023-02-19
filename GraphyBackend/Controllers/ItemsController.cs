@@ -10,11 +10,11 @@ namespace GraphyBackend.Controllers
 	[Route("items")] // whatever the name of the controller is that will be the route
 	public class ItemsController : ControllerBase
 	{
-		private readonly InMemItemsRepository repository;
+		private readonly IItemsRepository repository;
 			
-		public ItemsController(private readonly InMemItemsRepository repository) 
+		public ItemsController(IItemsRepository repository) 
 		{
-				
+			this.repository = repository;	
 		}
 		
 		// GET /items

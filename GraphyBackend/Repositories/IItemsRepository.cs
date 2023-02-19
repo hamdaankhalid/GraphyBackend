@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using GraphyBackend.Models;
 
-namespace GraphyBackend.IItemsRepository 
+namespace GraphyBackend.Repositories 
 {
 	public interface IItemsRepository 
 	{

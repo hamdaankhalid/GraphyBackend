@@ -5,7 +5,7 @@ using GraphyBackend.Models;
 
 namespace GraphyBackend.Repositories
 {
-	public class InMemItemsRepository
+	public class InMemItemsRepository : IItemsRepository
 	{
 		private readonly List<Item> items = new List<Item>{
 			new Item { Id = Guid.NewGuid(), Name = "Potion", Price = 9, CreatedDate = DateTimeOffset.UtcNow },
