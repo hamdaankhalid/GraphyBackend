@@ -28,7 +28,8 @@ namespace GraphyBackend
         public void ConfigureServices(IServiceCollection services)
         {
 			services.AddSingleton<IItemsRepository, InMemItemsRepository>();
-            services.AddControllers();
+            
+			services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "GraphyBackend", Version = "v1" });

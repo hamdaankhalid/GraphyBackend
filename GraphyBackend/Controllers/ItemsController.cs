@@ -1,8 +1,11 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using GraphyBackend.Models;
+using System;
+using GraphyBackend.Dtos;
 using GraphyBackend.Repositories;
+using GraphyBackend.Models;
 
 namespace GraphyBackend.Controllers 
 {
@@ -19,15 +22,16 @@ namespace GraphyBackend.Controllers
 		
 		// GET /items
 		[HttpGet]
-		public IEnumerable<Item> GetItems()
+		public IEnumerable<ItemDto> GetItems()
 		{
-			var items = repository.GetItems();
+			var items = repository.GetItems().Select(item => item.AsDto());
+
 			return items;
 		}
 		
 		// GET /items/id
 		[HttpGet("{id}")]
-		public ActionResult<Item> GetItem(Guid id)
+		public ActionResult<ItemDto> GetItem(Guid id)
 		{
 			var item = repository.GetItem(id);
 			
@@ -36,7 +40,43 @@ namespace GraphyBackend.Controllers
 				return NotFound();
 			}
 
-			return item;
+			return item.AsDto();
+		}
+		
+		// POST /items
+		[HttpPost]
+		public ActionResult<ItemDto> CreateItem(CreateItemDto itemDto)
+		{
+			var item = new Item{
+					Id=Guid.NewGuid(),
+					CreatedDate= DateTimeOffset.UtcNow,
+					Name= itemDto.Name,
+					Price= itemDto.Price
+				};
+
+			repository.CreateItem(item);
+
+			return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item.AsDto() );
+		}
+	
+		// GET /items/id
+		[HttpPut("{id}")]
+		public ActionResult UpdateItem(Guid id, UpdateItemDto item)
+		{
+			var existingItem = repository.GetItem(id);
+			if (existingItem is null)
+			{
+				return NotFound();
+			}
+
+			Item updateItem = existingItem with {
+				Name = item.Name,
+				Price = item.Price
+			};
+
+			repository.UpdateItem(updateItem);
+
+			return NoContent();
 		}
 	}
 }
