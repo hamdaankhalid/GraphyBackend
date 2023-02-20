@@ -35,6 +35,12 @@ namespace GraphyBackend.Repositories
 			var index = items.FindIndex(existingItem => existingItem.Id == item.Id);
 			items[index] = item;
 		}
+
+		public void DeleteItem(Guid id)
+		{
+			var index = items.FindIndex(exstItem => exstItem.Id == id);
+			items.RemoveAt(index);
+		}
 	}
 }
 

@@ -78,6 +78,21 @@ namespace GraphyBackend.Controllers
 
 			return NoContent();
 		}
+		
+		// DELETE /items/id
+		[HttpDelete("{id}")]
+		public ActionResult DeleteItem(Guid id)
+		{
+			var existingItem = repository.GetItem(id);
+			if (existingItem is null)
+			{
+				return NotFound();
+			}
+			
+			repository.DeleteItem(id);
+
+			return NoContent();	
+		}
 	}
 }
 
