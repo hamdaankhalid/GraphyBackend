@@ -1,17 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using GraphyBackend.Repositories;
+using GraphyBackend.Config;
+using MongoDB.Bson.Serialization;
+using MongoDB.Bson.Serialization.Serializers;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace GraphyBackend
 {
@@ -27,7 +25,16 @@ namespace GraphyBackend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-			services.AddSingleton<IItemsRepository, InMemItemsRepository>();
+			BsonSerializer.RegisterSerializer(new GuidSerializer(BsonType.String));
+			BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.String));
+			
+			services.AddSingleton<IMongoClient>(serviceProvider => 
+			{
+				var settings = Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
+				return new MongoClient(settings.ConnectionString);
+			});
+
+			services.AddSingleton<IItemsRepository, MongoDbItemsRepository>();
             
 			services.AddControllers();
             services.AddSwaggerGen(c =>
