@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using GraphyBackend.Models;
 
 namespace GraphyBackend.Repositories
@@ -13,33 +14,36 @@ namespace GraphyBackend.Repositories
 			new Item { Id = Guid.NewGuid(), Name = "Bronze Shield", Price = 18, CreatedDate= DateTimeOffset.UtcNow }
 		};
 		
-		public IEnumerable<Item> GetItems()
+		public async Task<IEnumerable<Item>> GetItems()
 		{
-			return items;
+			return await Task.FromResult(items);
 		}
 
-		public Item GetItem(Guid id)
+		public async Task<Item> GetItem(Guid id)
 		{
 			// return item or return null
-			return items.Where(item => item.Id == id).SingleOrDefault();
+			return await Task.FromResult(items.Where(item => item.Id == id).SingleOrDefault());
 		}
 	
 		
-		public void CreateItem(Item item)
+		public async Task CreateItem(Item item)
 		{
 			items.Add(item);
+			await Task.CompletedTask;
 		}
 		
-		public void UpdateItem(Item item)
+		public async Task UpdateItem(Item item)
 		{
 			var index = items.FindIndex(existingItem => existingItem.Id == item.Id);
 			items[index] = item;
+			await Task.CompletedTask;
 		}
 
-		public void DeleteItem(Guid id)
+		public async Task DeleteItem(Guid id)
 		{
 			var index = items.FindIndex(exstItem => exstItem.Id == id);
 			items.RemoveAt(index);
+			await Task.CompletedTask;
 		}
 	}
 }

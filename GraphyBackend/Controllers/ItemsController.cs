@@ -2,14 +2,14 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using GraphyBackend.Dtos;
 using GraphyBackend.Repositories;
 using GraphyBackend.Models;
+using System.Threading.Tasks;
 
-namespace GraphyBackend.Controllers 
+namespace GraphyBackend.Controllers
 {
-	[ApiController]
+       [ApiController]
 	[Route("items")] // whatever the name of the controller is that will be the route
 	public class ItemsController : ControllerBase
 	{
@@ -22,18 +22,18 @@ namespace GraphyBackend.Controllers
 		
 		// GET /items
 		[HttpGet]
-		public IEnumerable<ItemDto> GetItems()
+		public async Task<IEnumerable<ItemDto>> GetItems()
 		{
-			var items = repository.GetItems().Select(item => item.AsDto());
+			var items = (await repository.GetItems()).Select(item => item.AsDto());
 
 			return items;
 		}
 		
 		// GET /items/id
 		[HttpGet("{id}")]
-		public ActionResult<ItemDto> GetItem(Guid id)
+		public async Task<ActionResult<ItemDto>> GetItem(Guid id)
 		{
-			var item = repository.GetItem(id);
+			var item = await repository.GetItem(id);
 			
 			if (item is null)
 			{
@@ -45,7 +45,7 @@ namespace GraphyBackend.Controllers
 		
 		// POST /items
 		[HttpPost]
-		public ActionResult<ItemDto> CreateItem(CreateItemDto itemDto)
+		public async Task<ActionResult<ItemDto>> CreateItem(CreateItemDto itemDto)
 		{
 			var item = new Item{
 					Id=Guid.NewGuid(),
@@ -54,16 +54,16 @@ namespace GraphyBackend.Controllers
 					Price= itemDto.Price
 				};
 
-			repository.CreateItem(item);
+			await repository.CreateItem(item);
 
 			return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item.AsDto() );
 		}
 	
 		// GET /items/id
 		[HttpPut("{id}")]
-		public ActionResult UpdateItem(Guid id, UpdateItemDto item)
+		public async Task<ActionResult> UpdateItem(Guid id, UpdateItemDto item)
 		{
-			var existingItem = repository.GetItem(id);
+			var existingItem = await repository.GetItem(id);
 			if (existingItem is null)
 			{
 				return NotFound();
@@ -74,22 +74,22 @@ namespace GraphyBackend.Controllers
 				Price = item.Price
 			};
 
-			repository.UpdateItem(updateItem);
+			await repository.UpdateItem(updateItem);
 
 			return NoContent();
 		}
 		
 		// DELETE /items/id
 		[HttpDelete("{id}")]
-		public ActionResult DeleteItem(Guid id)
+		public async Task<ActionResult> DeleteItem(Guid id)
 		{
-			var existingItem = repository.GetItem(id);
+			var existingItem = await repository.GetItem(id);
 			if (existingItem is null)
 			{
 				return NotFound();
 			}
 			
-			repository.DeleteItem(id);
+			await repository.DeleteItem(id);
 
 			return NoContent();	
 		}

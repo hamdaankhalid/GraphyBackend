@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MongoDB.Driver;
 using GraphyBackend.Models;
 using MongoDB.Bson;
+using System.Threading.Tasks;
 
 namespace GraphyBackend.Repositories
 {
@@ -13,6 +14,7 @@ namespace GraphyBackend.Repositories
 		private const string databaseName = "graphyDb";
 		private const string collectionName = "items";
 		private readonly IMongoCollection<Item> itemsCollection;
+		private readonly FilterDefinitionBuilder<Item> filterBuilder = Builders<Item>.Filter;
 
         public MongoDbItemsRepository(IMongoClient mongoClient)
         {
@@ -20,29 +22,33 @@ namespace GraphyBackend.Repositories
 				itemsCollection = database.GetCollection<Item>(collectionName);
         }
 
-        public IEnumerable<Item> GetItems()
+        public async Task<IEnumerable<Item>> GetItems()
         {
-			return itemsCollection.Find(new BsonDocument()).ToList();
+			return (await itemsCollection.FindAsync(new BsonDocument())).ToList();
 		}
 
-        public Item GetItem(Guid id)
+        public async Task<Item> GetItem(Guid id)
         {
-			return itemsCollection.Find()
+			var filter = filterBuilder.Eq(item => item.Id, id);
+			return await itemsCollection.Find(filter).SingleOrDefaultAsync();
         }
 
-        public void CreateItem(Item item)
+        public async Task CreateItem(Item item)
         {
-			itemsCollection.InsertOne(item);
+			await itemsCollection.InsertOneAsync(item);
         }
 
-        public void UpdateItem(Item item)
+        public async Task UpdateItem(Item item)
         {
-			throw new NotImplementedException();
+			var filter = filterBuilder.Eq(existingItem => existingItem.Id, item.Id);
+			await itemsCollection.FindOneAndReplaceAsync(filter, item);
         }
 
-        public void DeleteItem(Guid id)
+        public async Task DeleteItem(Guid id)
         {
-			throw new NotImplementedException();
-        }
+			var filter = filterBuilder.Eq(item => item.Id, id);
+			await itemsCollection.DeleteOneAsync(filter);
+		}
 	}
 }
+
