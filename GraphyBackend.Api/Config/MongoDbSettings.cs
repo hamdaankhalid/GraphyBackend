@@ -1,4 +1,4 @@
-namespace GraphyBackend.Config
+namespace GraphyBackend.Api.Config
 {
 
     public class MongoDbSettings

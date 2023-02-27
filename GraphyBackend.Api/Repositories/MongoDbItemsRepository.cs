@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using MongoDB.Driver;
-using GraphyBackend.Models;
-using MongoDB.Bson;
 using System.Threading.Tasks;
+using GraphyBackend.Api.Models;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
-namespace GraphyBackend.Repositories
+namespace GraphyBackend.Api.Repositories
 {
 
     public class MongoDbItemsRepository : IItemsRepository

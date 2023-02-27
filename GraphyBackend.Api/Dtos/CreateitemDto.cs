@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace GraphyBackend.Dtos
+namespace GraphyBackend.Api.Dtos
 {
-	public record UpdateItemDto
+	public record CreateItemDto
 	{
 		[Required]
 		public string Name {get; init;}

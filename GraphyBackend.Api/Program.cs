@@ -9,7 +9,7 @@ using Microsoft.Extensions.Logging;
 
 // docker run -d --rm --name mongo -p 27017:27017 -v mongodbdata:/data/db mongo
 
-namespace GraphyBackend
+namespace GraphyBackend.Api
 {
     public class Program
     {

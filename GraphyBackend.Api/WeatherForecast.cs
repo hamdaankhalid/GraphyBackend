@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GraphyBackend
+namespace GraphyBackend.Api
 {
     public class WeatherForecast
     {

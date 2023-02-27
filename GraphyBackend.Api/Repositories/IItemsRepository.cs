@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GraphyBackend.Models;
+using GraphyBackend.Api.Models;
 
-namespace GraphyBackend.Repositories
+namespace GraphyBackend.Api.Repositories
 {
-       public interface IItemsRepository
+    public interface IItemsRepository
     {
            Task<Item> GetItem(Guid id);
            Task<IEnumerable<Item>> GetItems();

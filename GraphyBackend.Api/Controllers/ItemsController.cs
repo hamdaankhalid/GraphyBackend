@@ -2,12 +2,12 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using GraphyBackend.Dtos;
-using GraphyBackend.Repositories;
-using GraphyBackend.Models;
+using GraphyBackend.Api.Dtos;
+using GraphyBackend.Api.Repositories;
+using GraphyBackend.Api.Models;
 using System.Threading.Tasks;
 
-namespace GraphyBackend.Controllers
+namespace GraphyBackend.Api.Controllers
 {
        [ApiController]
 	[Route("items")] // whatever the name of the controller is that will be the route

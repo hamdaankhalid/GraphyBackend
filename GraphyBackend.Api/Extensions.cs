@@ -1,9 +1,9 @@
-using GraphyBackend.Models;
-using GraphyBackend.Dtos;
+using GraphyBackend.Api.Dtos;
+using GraphyBackend.Api.Models;
 
-namespace GraphyBackend
+namespace GraphyBackend.Api
 {
-	public static class Extensions
+       public static class Extensions
 	{
 		public static ItemDto AsDto(this Item item)
 		{

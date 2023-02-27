@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace GraphyBackend.Controllers
+namespace GraphyBackend.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

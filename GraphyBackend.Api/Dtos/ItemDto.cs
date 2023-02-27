@@ -1,6 +1,6 @@
 using System;
 
-namespace GraphyBackend.Dtos
+namespace GraphyBackend.Api.Dtos
 {
 	public record ItemDto
 	{

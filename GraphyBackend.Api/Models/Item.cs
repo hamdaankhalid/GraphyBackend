@@ -1,6 +1,6 @@
 using System;
 
-namespace GraphyBackend.Models
+namespace GraphyBackend.Api.Models
 {
 	public record Item
 	{

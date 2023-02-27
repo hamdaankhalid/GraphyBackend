@@ -1,17 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi.Models;
-using GraphyBackend.Repositories;
-using GraphyBackend.Config;
+using GraphyBackend.Api.Repositories;
+using GraphyBackend.Api.Config;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson;
 using MongoDB.Driver;
+using Microsoft.OpenApi.Models;
 
-namespace GraphyBackend
+namespace GraphyBackend.Api
 {
     public class Startup
     {

@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GraphyBackend.Models;
+using GraphyBackend.Api.Models;
 
-namespace GraphyBackend.Repositories
+namespace GraphyBackend.Api.Repositories
 {
-	public class InMemItemsRepository : IItemsRepository
+       public class InMemItemsRepository : IItemsRepository
 	{
 		private readonly List<Item> items = new List<Item>{
 			new Item { Id = Guid.NewGuid(), Name = "Potion", Price = 9, CreatedDate = DateTimeOffset.UtcNow },
