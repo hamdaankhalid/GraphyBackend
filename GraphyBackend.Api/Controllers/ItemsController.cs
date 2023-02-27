@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace GraphyBackend.Api.Controllers
 {
-       [ApiController]
+    [ApiController]
 	[Route("items")] // whatever the name of the controller is that will be the route
 	public class ItemsController : ControllerBase
 	{
