@@ -39,11 +39,11 @@ namespace GraphyBackend.Api
 
 			services.AddSingleton<QueueClient>(serviceProvider => 
 			{
-				var azureStorageQueueConnectionString = Configuration.GetSection("AzureStorageQueueConnectionString").Get<String>();
+				var azureStorageQueueConnectionString = Environment.GetEnvironmentVariable("AzureStorageQueueConnectionString");
 				var queue = new QueueClient(azureStorageQueueConnectionString, "item-uploaded-queue");
 				queue.CreateIfNotExists();
 				if (!queue.Exists()) {
-					throw new Exception("queue not initializes");
+					throw new Exception("queue not initialized");
 				}
 				return queue;
 			});
