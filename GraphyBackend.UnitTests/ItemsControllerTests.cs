@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 using GraphyBackend.Api.Dtos;
 using GraphyBackend.Api.Controllers;
 using Microsoft.AspNetCore.Mvc;
-
+using Azure.Storage.Queues;
+using Azure;
+using Azure.Storage.Queues.Models;
 
 namespace GraphyBackend.UnitTests
 {
@@ -17,7 +19,7 @@ namespace GraphyBackend.UnitTests
     {
 
         private readonly Mock<IItemsRepository> repositoryStub = new Mock<IItemsRepository>();
-
+		private readonly Mock<QueueClient> queueClient = new Mock<QueueClient>(); // TODO: Need to add the package for this
         private readonly Random rand = new Random();
 
         [Fact]
@@ -25,7 +27,7 @@ namespace GraphyBackend.UnitTests
         {
             // Arrange
 			repositoryStub.Setup(repo => repo.GetItem(It.IsAny<Guid>())).ReturnsAsync((Item)null);
-            var controller = new ItemsController(repositoryStub.Object);
+            var controller = new ItemsController(repositoryStub.Object, queueClient.Object);
 
             // Act
 
@@ -41,7 +43,7 @@ namespace GraphyBackend.UnitTests
             // Arrange
             var expectedItem = CreateRandomItem();
             repositoryStub.Setup(repo => repo.GetItem(It.IsAny<Guid>())).ReturnsAsync(expectedItem);
-            var controller = new ItemsController(repositoryStub.Object);
+            var controller = new ItemsController(repositoryStub.Object, queueClient.Object);
 
             // Act
 
@@ -60,7 +62,7 @@ namespace GraphyBackend.UnitTests
 			var expectedItems = new Item[3]{CreateRandomItem(), CreateRandomItem(), CreateRandomItem()};
 
 			repositoryStub.Setup(repo => repo.GetItems()).ReturnsAsync(expectedItems);
-			var controller = new ItemsController(repositoryStub.Object);
+			var controller = new ItemsController(repositoryStub.Object, queueClient.Object);
 
 			var result = await controller.GetItems();
 
@@ -76,7 +78,7 @@ namespace GraphyBackend.UnitTests
 		
 			var expectedItems = new Item[]{};
 			repositoryStub.Setup(repo => repo.GetItems()).ReturnsAsync(expectedItems);
-			var controller = new ItemsController(repositoryStub.Object);
+			var controller = new ItemsController(repositoryStub.Object, queueClient.Object);
 
 			var result = await controller.GetItems();
 
@@ -89,12 +91,15 @@ namespace GraphyBackend.UnitTests
 		[Fact]
 		public async Task CreateItem_WithItemToCreate_ReturnsCreatedItem()
 		{
+			var queueClientResponse = new Response<SendReceipt>();
+			queueClient.Setup(q => q.SendMessageAsync(It.IsAny<String>())).ReturnsAsync(queueClientResponse);
+
 			var createItemRequest = new CreateItemDto() {
 				Name = Guid.NewGuid().ToString(),
 				Price = rand.Next(1000)
 			};
 
-			var controller = new ItemsController(repositoryStub.Object);
+			var controller = new ItemsController(repositoryStub.Object, queueClient.Object);
 
 			var result = await controller.CreateItem(createItemRequest);
 
@@ -118,7 +123,7 @@ namespace GraphyBackend.UnitTests
 			var itemId = existingItem.Id;
 			var itemToUpdate = new UpdateItemDto { Name="hamdaan", Price = existingItem.Price + 3 };
 			
-			var controller = new ItemsController(repositoryStub.Object);
+			var controller = new ItemsController(repositoryStub.Object, queueClient.Object);
 			var result = await controller.UpdateItem(itemId, itemToUpdate);
 			result.Should().BeOfType<NoContentResult>();
 		}
@@ -132,7 +137,7 @@ namespace GraphyBackend.UnitTests
 	
 			var itemId = existingItem.Id;
 			
-			var controller = new ItemsController(repositoryStub.Object);
+			var controller = new ItemsController(repositoryStub.Object, queueClient.Object);
 			var result = await controller.DeleteItem(itemId);
 			result.Should().BeOfType<NoContentResult>();
 		}

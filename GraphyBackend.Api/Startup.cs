@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using System;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Configuration;
@@ -10,6 +11,7 @@ using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Microsoft.OpenApi.Models;
+using Azure.Storage.Queues;
 
 namespace GraphyBackend.Api
 {
@@ -17,6 +19,7 @@ namespace GraphyBackend.Api
     {
         public Startup(IConfiguration configuration)
         {
+
             Configuration = configuration;
         }
 
@@ -32,6 +35,17 @@ namespace GraphyBackend.Api
 			{
 				var settings = Configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
 				return new MongoClient(settings.ConnectionString);
+			});
+
+			services.AddSingleton<QueueClient>(serviceProvider => 
+			{
+				var azureStorageQueueConnectionString = Configuration.GetSection("AzureStorageQueueConnectionString").Get<String>();
+				var queue = new QueueClient(azureStorageQueueConnectionString, "item-uploaded-queue");
+				queue.CreateIfNotExists();
+				if (!queue.Exists()) {
+					throw new Exception("queue not initializes");
+				}
+				return queue;
 			});
 
 			services.AddSingleton<IItemsRepository, MongoDbItemsRepository>();
