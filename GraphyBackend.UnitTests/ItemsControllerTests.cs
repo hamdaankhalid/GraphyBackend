@@ -91,8 +91,8 @@ namespace GraphyBackend.UnitTests
 		[Fact]
 		public async Task CreateItem_WithItemToCreate_ReturnsCreatedItem()
 		{
-			var queueClientResponse = new Response<SendReceipt>();
-			queueClient.Setup(q => q.SendMessageAsync(It.IsAny<String>())).ReturnsAsync(queueClientResponse);
+			var queueClientResponse = new Mock<Response<SendReceipt>>();
+			queueClient.Setup(q => q.SendMessageAsync(It.IsAny<String>())).ReturnsAsync(queueClientResponse.Object);
 
 			var createItemRequest = new CreateItemDto() {
 				Name = Guid.NewGuid().ToString(),
